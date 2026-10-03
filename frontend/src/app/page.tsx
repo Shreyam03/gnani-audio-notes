@@ -1,5 +1,5 @@
 "use client";
-import Link from "next/link";
+
 import { useEffect, useState, useCallback } from "react";
 import AudioUploader from "@/components/AudioUploader";
 import ProcessingStatus from "@/components/ProcessingStatus";
@@ -40,27 +40,24 @@ export default function Home() {
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
       {/* Left: Upload + Active note */}
-      <div className="md:col-span-2 space-y-5">
+      <div className="space-y-5 md:col-span-2">
         <div>
           <div className="flex items-center justify-between">
             <h1 className="text-2xl font-semibold text-slate-900">
               New Recording
             </h1>
-
-            <Link
-              href="/architecture"
-              className="inline-flex items-center gap-1.5 rounded-md border border-slate-200 bg-white px-3 py-1.5 text-sm font-medium text-slate-700 shadow-sm transition hover:border-slate-300 hover:bg-slate-50 hover:text-slate-900"
-            >
-              Architecture
-              <span aria-hidden="true">→</span>
-            </Link>
           </div>
-          <p className="text-sm text-gray-500 mb-4">
+
+          <p className="mb-4 text-sm text-gray-500">
             Upload any audio file. Long recordings are transcribed using{" "}
-            <span className="font-medium text-gray-700">Gnani Batch ASR</span>.
+            <span className="font-medium text-gray-700">
+              Gnani Batch ASR
+            </span>
+            .
           </p>
+
           <AudioUploader onUploaded={handleUploaded} />
         </div>
 
@@ -68,15 +65,24 @@ export default function Home() {
         {activeNote && (
           <div className="space-y-4">
             {activeNote.status === "processing" && (
-              <ProcessingStatus note={activeNote} onUpdate={handleNoteUpdate} />
+              <ProcessingStatus
+                note={activeNote}
+                onUpdate={handleNoteUpdate}
+              />
             )}
+
             {activeNote.status === "completed" && (
               <NoteViewer note={activeNote} />
             )}
+
             {activeNote.status === "failed" && (
               <div className="rounded-xl border border-red-200 bg-red-50 p-4">
-                <p className="text-sm font-medium text-red-700">Processing failed</p>
-                <p className="text-xs text-red-500 mt-1">{activeNote.error_message}</p>
+                <p className="text-sm font-medium text-red-700">
+                  Processing failed
+                </p>
+                <p className="mt-1 text-xs text-red-500">
+                  {activeNote.error_message}
+                </p>
               </div>
             )}
           </div>
@@ -85,10 +91,11 @@ export default function Home() {
 
       {/* Right: History sidebar */}
       <div className="md:col-span-1">
-        <h2 className="text-sm font-semibold text-gray-600 uppercase tracking-wide mb-3">
+        <h2 className="mb-3 text-sm font-semibold uppercase tracking-wide text-gray-600">
           Past Notes
         </h2>
-        <div className="bg-white border border-gray-200 rounded-xl p-2">
+
+        <div className="rounded-xl border border-gray-200 bg-white p-2">
           <NoteHistory
             notes={notes}
             activeId={activeNote?.id ?? null}
