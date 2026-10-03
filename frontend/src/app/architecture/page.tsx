@@ -185,7 +185,7 @@ export default function ArchitecturePage() {
           </p>
 
           <a
-            href="PASTE-YOUR-REPOSITORY-URL-HERE"
+            href="https://github.com/Shreyam03/gnani-audio-notes"
             target="_blank"
             rel="noreferrer"
             className="mt-3 inline-block font-medium underline underline-offset-4"
